@@ -1,0 +1,21 @@
+% Base case: Move a single disk from X to Y
+move(1, X, Y, _) :-
+    write('Move top disk from '), write(X), write(' to '), write(Y), nl.
+
+% Recursive case: Move N disks from X to Y using Z as auxiliary
+move(N, X, Y, Z) :-
+    N > 1,
+    M is N - 1,
+    move(M, X, Z, Y),  % Move M disks from X to Z using Y as auxiliary
+    move(1, X, Y, _),  % Move the 1 remaining disk from X to Y
+    move(M, Z, Y, X).  % Move M disks from Z to Y using X as auxiliary
+
+% Example Output
+?- move(3, 'A', 'C', 'B').
+% Move top disk from A to C
+% Move top disk from A to B
+% Move top disk from C to B
+% Move top disk from A to C
+% Move top disk from B to A
+% Move top disk from B to C
+% Move top disk from A to C

@@ -1,0 +1,41 @@
+% Define predicates directly in Prolog
+% Solves the N-Queens problem for an N x N chessboard
+
+% Base case: an empty board
+nqueens(N) :-
+    makelist(N, Rows),
+    Diagonal = N * 2 - 1,
+    makelist(Diagonal, Diag1),
+    makelist(Diagonal, Diag2),
+    placeN(N, board([], Rows, Rows, Diag1, Diag2), Final),
+    write(Final), nl.
+
+% Place all queens
+placeN(_, board(Queens, [], [], Diag1, Diag2), board(Queens, [], [], Diag1, Diag2)) :- !.
+placeN(N, Board1, Result) :-
+    place_a_queen(N, Board1, Board2),
+    placeN(N, Board2, Result).
+
+% Place a single queen on the board
+place_a_queen(N, board(Queens, Rows, Columns, Diag1, Diag2), board([q(Row, Col)|Queens], NewRows, NewCols, NewDiag1, NewDiag2)) :-
+    nextrow(Row, Rows, NewRows),
+    findandremove(Col, Columns, NewCols),
+    D1 is N + Col - Row, findandremove(D1, Diag1, NewDiag1),
+    D2 is Row + Col - 1, findandremove(D2, Diag2, NewDiag2).
+
+% Remove an element from a list
+findandremove(X, [X|Rest], Rest).
+findandremove(X, [Y|Rest], [Y|Tail]) :-
+    findandremove(X, Rest, Tail).
+
+% Generate a list of numbers from 1 to N
+makelist(1, [1]).
+makelist(N, [N|Rest]) :-
+    N1 is N - 1,
+    makelist(N1, Rest).
+
+% Pick the next row for the queen
+nextrow(Row, [Row|Rest], Rest).
+
+% Query example:
+% ?- nqueens(4).

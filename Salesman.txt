@@ -1,0 +1,29 @@
+% Domains
+:- dynamic road/3.
+:- dynamic route/3.
+
+% Facts
+road(tampa, houston, 200).
+road(gordon, tampa, 300).
+road(houston, gordon, 100).
+road(houston, kansas_city, 120).
+road(gordon, kansas_city, 130).
+
+% Rules
+route(Town1, Town2, Distance) :-
+    route(Town1, Town2, Distance, []).
+
+route(Town1, Town2, Distance, Visited) :-
+    road(Town1, Town2, Distance),
+    \+ member(Town2, Visited).
+
+route(Town1, Town2, Distance, Visited) :-
+    road(Town1, X, Dist1),
+    X \= Town2,
+    \+ member(X, Visited),
+    route(X, Town2, Dist2, [Town1 | Visited]),
+    Distance is Dist1 + Dist2.
+
+% Goal
+:- route(tampa, kansas_city, X),
+   write('Distance from Tampa to Kansas City is '), write(X), nl.

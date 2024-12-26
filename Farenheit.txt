@@ -1,0 +1,12 @@
+% Predicate to convert Celsius to Fahrenheit
+c_to_f(C, F) :-
+    F is C * 9 / 5 + 32.
+
+% Predicate to check if a Fahrenheit temperature is below freezing
+freezing(F) :-
+    F =< 32.
+
+% Example queries
+% ?- c_to_f(0, F).         % Convert 0°C to Fahrenheit
+% ?- freezing(30).         % Check if 30°F is below freezing
+% ?- freezing(40).         % Check if 40°F is below freezing

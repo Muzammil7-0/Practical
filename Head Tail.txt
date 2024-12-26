@@ -1,0 +1,12 @@
+% Single Head/Tail
+head_tail([H|T], H, T).
+
+% Multiple Heads and Tail
+multiple_heads([H1, H2|T], H1, H2, T).
+
+% Example Output
+?- head_tail([1, 2, 3, 4], H, T).
+% H = 1, T = [2, 3, 4].
+
+?- multiple_heads([1, 2, 3, 4, 5], H1, H2, T).
+% H1 = 1, H2 = 2, T = [3, 4, 5].

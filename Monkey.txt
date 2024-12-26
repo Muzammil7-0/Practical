@@ -1,0 +1,26 @@
+% Facts
+in_room(bananas).
+in_room(chair).
+in_room(monkey).
+clever(monkey).
+can_climb(monkey, chair).
+tall(chair).
+
+% Rules
+can_reach(X, bananas) :-
+    clever(X),
+    can_climb(X, chair),
+    in_room(bananas),
+    in_room(chair),
+    in_room(X).
+
+get_on(X, chair) :-
+    can_climb(X, chair).
+
+close(X, bananas) :-
+    get_on(X, chair),
+    tall(chair).
+
+% Query
+:- can_reach(monkey, bananas),
+   write('Monkey can reach the bananas'), nl.
